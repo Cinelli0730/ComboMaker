@@ -20,3 +20,35 @@ const double ratioDisplayCombo = 0.4;
 const double ratioDisplayArts = 0.2;
 //入力用ボタンのサイズ比
 const double ratioInputButtons = 0.4;
+
+//入力中のコンボ確認画面のサイズ比
+const int flexRatioDisplayCombo = 4;
+//入力中の技確認画面のサイズ比
+const int flexRatioDisplayArts = 2;
+//入力用ボタンのサイズ比
+const int flexRatioInputButtons = 4;
+
+//コマンドの入力の長さ
+const int commandLength = 5;
+
+//フレームデータの列インデックス
+const int indexCommand1 = 1;
+const int indexCommand2 = 2;
+const int indexCommand3 = 3;
+const int indexCommand4 = 4;
+const int indexCommand5 = 5;
+const int indexMoveName = 6;
+const int indexStartUp = 7;
+const int indexActive = 8;
+const int indexRecovery = 9;
+const int indexHitStun = 10;
+const int indexBlockStun = 11;
+const int indexCancel = 12;
+const int indexDamage = 13;
+const int indexScaling = 14;
+const int indexDGageUp = 15;
+const int indexDGageDown = 16;
+const int indexDGageCounter = 17;
+const int indexSAGageUp = 18;
+const int indexProperties = 19;
+const int indexDetail = 20;

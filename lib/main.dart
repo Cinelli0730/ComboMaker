@@ -14,7 +14,7 @@ class ComboMaker extends StatefulWidget {
 }
 
 class _ComboMakerState extends State<ComboMaker> {
-  var result = '0';
+  var result = '';
   var inputUser = '';
   double? _deviceWidth, _deviceHeight;
 
@@ -36,13 +36,13 @@ class _ComboMakerState extends State<ComboMaker> {
       children: [
         SizedBox(
           width: _deviceWidth! / rowMax, //横幅
-          height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
+          //height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
           child: RawMaterialButton(
             onPressed: () {
               if (text1 == 'AC') {
                 setState(() {
                   inputUser = '';
-                  result = '0';
+                  result = '';
                 });
               } else {
                 buttonPressed(text1);
@@ -63,7 +63,7 @@ class _ComboMakerState extends State<ComboMaker> {
         ),
         SizedBox(
           width: _deviceWidth! / rowMax, //横幅
-          height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
+          //height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
           child: RawMaterialButton(
             onPressed: () {
               if (text2 == 'CE') {
@@ -91,7 +91,7 @@ class _ComboMakerState extends State<ComboMaker> {
         ),
         SizedBox(
           width: _deviceWidth! / rowMax, //横幅
-          height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
+          //height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
           child: RawMaterialButton(
             onPressed: () {
               buttonPressed(text3);
@@ -111,7 +111,7 @@ class _ComboMakerState extends State<ComboMaker> {
         ),
         SizedBox(
             width: _deviceWidth! / rowMax, //横幅
-            height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
+            //height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
             child: RawMaterialButton(
               onPressed: () {
                 if (text4 == '=') {
@@ -140,13 +140,13 @@ class _ComboMakerState extends State<ComboMaker> {
             )),
         SizedBox(
           width: _deviceWidth! / rowMax, //横幅
-          height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
+          //height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
           child: RawMaterialButton(
             onPressed: () {
               if (text5 == 'AC') {
                 setState(() {
                   inputUser = '';
-                  result = '0';
+                  result = '';
                 });
               } else {
                 buttonPressed(text5);
@@ -167,13 +167,22 @@ class _ComboMakerState extends State<ComboMaker> {
         ),
         SizedBox(
           width: _deviceWidth! / rowMax, //横幅
-          height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
+          //height: _deviceHeight! * ratioInputButtons / lineMax, //高さ
           child: RawMaterialButton(
             onPressed: () {
               if (text6 == 'AC') {
                 setState(() {
                   inputUser = '';
-                  result = '0';
+                  result = '';
+                });
+              } else if (text6 == 'NX') {
+                setState(() {
+                  if (result == '') {
+                    result = inputUser;
+                  } else {
+                    result = '$result→$inputUser';
+                  }
+                  inputUser = '';
                 });
               } else {
                 buttonPressed(text6);
@@ -206,56 +215,47 @@ class _ComboMakerState extends State<ComboMaker> {
           child: Column(
             children: [
               Expanded(
-                flex: 35,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                flex: flexRatioDisplayCombo,
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.start,
                   children: [
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            inputUser,
-                            style: const TextStyle(
-                              color: kLightGray,
-                              fontSize: 40,
-                            ),
-                            textAlign: TextAlign.end,
-                          ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      color: kBlue,
+                      child: Text(
+                        result,
+                        style: const TextStyle(
+                          backgroundColor: kRed,
+                          color: kWhite,
+                          fontSize: 40,
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const Text(
-                            '=',
-                            style: TextStyle(
-                              color: kLightGray,
-                              fontSize: 80,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              result,
-                              style: const TextStyle(
-                                color: kWhite,
-                                fontSize: 70,
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ],
                 ),
               ),
               Expanded(
-                flex: 65,
+                flex: flexRatioDisplayArts,
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        inputUser,
+                        style: const TextStyle(
+                          color: kLightGray,
+                          fontSize: 40,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: flexRatioInputButtons,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -266,7 +266,7 @@ class _ComboMakerState extends State<ComboMaker> {
                     getRow('4', '5', '6', 'MP', 'MK', 'BK'),
                     getRow('1', '2', '3', 'LP', 'LK', 'NX'),
                     const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     ),
                   ],
                 ),
