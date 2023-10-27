@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'constants.dart';
 
 class InputCheck {
@@ -15,9 +16,15 @@ class InputCheck {
             break;
           }
         }
-        print(moveTable[i][j].value.toString());
-        print(moveTable[i][j].value);
-        print(moveTable[i][j]);
+        if (kDebugMode) {
+          print(moveTable[i][j].value.toString());
+        }
+        if (kDebugMode) {
+          print(moveTable[i][j].value);
+        }
+        if (kDebugMode) {
+          print(moveTable[i][j]);
+        }
       }
     }
     return false;
