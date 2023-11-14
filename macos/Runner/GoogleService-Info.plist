@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAp-UILV55kLl00j2SkfHaP-7Gz9mtTndk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>261163419236</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.comboMaker.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>combomaker-40efc</string>
+	<key>STORAGE_BUCKET</key>
+	<string>combomaker-40efc.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:261163419236:ios:0fe23e07e5cc0a4fabc171</string>
+</dict>
+</plist>

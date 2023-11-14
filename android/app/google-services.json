@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "261163419236",
+    "project_id": "combomaker-40efc",
+    "storage_bucket": "combomaker-40efc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261163419236:android:ecad6d33e9e8ef8babc171",
+        "android_client_info": {
+          "package_name": "com.example.combo_maker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoyeArrBjH05DqUepqiHgTGf_dYKVcCKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
