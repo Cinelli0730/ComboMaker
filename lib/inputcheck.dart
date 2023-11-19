@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'constants.dart';
+import 'common/constants.dart';
 
 class InputCheck {
   InputCheck();

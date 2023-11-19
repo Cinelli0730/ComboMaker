@@ -7,5 +7,5 @@ import 'set_data.dart';
 Future<void> main() async {
   // Fireabse初期化
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }

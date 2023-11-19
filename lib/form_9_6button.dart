@@ -1,5 +1,7 @@
+import 'package:combo_maker/inputcheck.dart';
+import 'package:combo_maker/manage_cloud/readfile.dart';
 import 'package:flutter/material.dart';
-import 'package:combo_maker/constants.dart';
+import 'package:combo_maker/common/constants.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class ComboMaker extends StatefulWidget {
@@ -13,6 +15,21 @@ class _ComboMakerState extends State<ComboMaker> {
   var result = '';
   var inputUser = '';
   double? _deviceWidth, _deviceHeight;
+
+  //ファイル読み込み用
+  //将来消す
+  String importPath = 'data/'; //FrameData_Read.xlsx';
+  String fileName = 'FrameData_Read.xlsx';
+  String sheetName = 'A.K.I.';
+  String input = 'MP';
+  //入力判定用クラス
+  InputCheck inputCheck = InputCheck();
+  var readExcel; // = await excelImport(importPath, fileName, sheetName);
+
+  _ComboMakerState() {
+    //ファイル読み込み
+    readExcel = excelImport(importPath, fileName, sheetName);
+  }
 
   void buttonPressed(String text) {
     setState(() {
@@ -172,13 +189,16 @@ class _ComboMakerState extends State<ComboMaker> {
                   result = '';
                 });
               } else if (text6 == 'NX') {
+                bool retInputCheck = inputCheck.judge(readExcel, inputUser);
                 setState(() {
-                  if (result == '') {
-                    result = inputUser;
-                  } else {
-                    result = '$result→$inputUser';
+                  if (retInputCheck) {
+                    if ("" == result) {
+                      result = inputUser;
+                    } else {
+                      result = '$result→$inputUser';
+                    }
+                    inputUser = '';
                   }
-                  inputUser = '';
                 });
               } else {
                 buttonPressed(text6);
