@@ -38,7 +38,6 @@ Future<List<List>> excelImport(
     var rowData = excel.tables[sheetName]?.rows[line];
     for (int row = 0; row < rowData!.length; row++) {
       Data? data = rowData[row];
-      Data? nullReplace;
       if (rowData[row]?.value == null) {
         rowData[row] ??= rowData[0];
         rowData[row]!.value = "0";
@@ -57,7 +56,7 @@ Future<List<List>> excelImport(
 void main() async {
   //テストシナリオ判別用定数
   const int testInputCheck = 1;
-  const int setCloud = 2;
+  //const int setCloud = 2;
   const int testConvertExcel = 3;
 
   const String importPath = 'data/'; //FrameData_Read.xlsx';
