@@ -2,8 +2,6 @@ import 'package:combo_maker/manage_cloud/readfile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:combo_maker/common/constants.dart';
-//import 'package:math_expressions/math_expressions.dart';
-//import 'form_9_6button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'common/moves.dart';
 
@@ -15,8 +13,6 @@ class ComboMaker extends StatefulWidget {
 }
 
 class _SetDataState extends State<ComboMaker> {
-  var result = '';
-  var inputUser = '';
   String directory = "";
   String path = "";
   String path1 = "";
@@ -30,8 +26,6 @@ class _SetDataState extends State<ComboMaker> {
   String fileName = 'FrameData_Read.xlsx';
   String sheetName = 'A.K.I.';
   String input = 'MP';
-  //入力判定用クラス
-  //InputCheck inputCheck = InputCheck();
   var readExcel; // = await excelImport(importPath, fileName, sheetName);
 
   _SetDataState() {
@@ -54,12 +48,6 @@ class _SetDataState extends State<ComboMaker> {
     return directory.path;
   }
 
-  void buttonPressed(String text) {
-    setState(() {
-      inputUser = inputUser + text;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -74,11 +62,10 @@ class _SetDataState extends State<ComboMaker> {
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(10),
-                  color: kRed,
+                  color: kWhite,
                   child: Text(
                     display,
                     style: const TextStyle(
-                      backgroundColor: kBlack,
                       color: kWhite,
                       fontSize: 20,
                     ),
@@ -97,7 +84,6 @@ class _SetDataState extends State<ComboMaker> {
                   readExcel =
                       //await excelImport(importPath, fileName, sheetName);
                       await excelImport("$path\\", fileName, sheetName);
-                  // ignore: unused_local_variable
                   List<Move> moveList = readFrameData(readExcel);
                 },
                 child: const Text("Read Excel Data"),

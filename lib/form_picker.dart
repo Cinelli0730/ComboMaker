@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'common/constants.dart';
 
@@ -55,7 +54,7 @@ class DroopdownButtonItems {
 */
 
 class Picker extends StatefulWidget {
-  const Picker({Key? key, required this.pickList}) : super(key: key);
+  const Picker({super.key, required this.pickList});
   final List<String> pickList;
   @override
   State<Picker> createState() => _PickerState();
