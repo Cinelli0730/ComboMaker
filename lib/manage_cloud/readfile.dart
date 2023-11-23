@@ -53,6 +53,29 @@ Future<List<List>> excelImport(
   return Future<List<List>>.value(importList);
 }
 
+Future<List<List>> excelImport2(Uint8List fileBytes, String sheetName) async {
+  var excel = Excel.decodeBytes(fileBytes);
+  List<List> importList = [];
+
+  for (int line = 0; line < excel.tables[sheetName]!.rows.length; line++) {
+    var rowData = excel.tables[sheetName]?.rows[line];
+    for (int row = 0; row < rowData!.length; row++) {
+      Data? data = rowData[row];
+      if (rowData[row]?.value == null) {
+        rowData[row] ??= rowData[0];
+        rowData[row]!.value = "0";
+      }
+      //var data = rowData[row]!.value;
+      if (data != null) {
+        //debugPrint(data.value); // 表示確認用
+      }
+    }
+    importList.add(rowData);
+  }
+
+  return Future<List<List>>.value(importList);
+}
+
 void main() async {
   //テストシナリオ判別用定数
   const int testInputCheck = 1;
