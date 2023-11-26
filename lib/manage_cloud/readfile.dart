@@ -28,8 +28,7 @@ Future<List<List>> csvImport(String folderName, String fileName) async {
 
 Future<List<List>> excelImport(
     String folderName, String fileName, String sheetName) async {
-  String importPath = folderName + fileName; //'data/FrameData_Read.xlsx';
-  //final File importFile = File(importPath);
+  String importPath = folderName + fileName;
   var bytes = File(importPath).readAsBytesSync();
   var excel = Excel.decodeBytes(bytes);
   List<List> importList = [];
@@ -37,14 +36,9 @@ Future<List<List>> excelImport(
   for (int line = 0; line < excel.tables[sheetName]!.rows.length; line++) {
     var rowData = excel.tables[sheetName]?.rows[line];
     for (int row = 0; row < rowData!.length; row++) {
-      Data? data = rowData[row];
       if (rowData[row]?.value == null) {
         rowData[row] ??= rowData[0];
         rowData[row]!.value = const FormulaCellValue("0");
-      }
-      //var data = rowData[row]!.value;
-      if (data != null) {
-        //debugPrint(data.value); // 表示確認用
       }
     }
     importList.add(rowData);
@@ -60,14 +54,9 @@ Future<List<List>> excelImport2(Uint8List fileBytes, String sheetName) async {
   for (int line = 0; line < excel.tables[sheetName]!.rows.length; line++) {
     var rowData = excel.tables[sheetName]?.rows[line];
     for (int row = 0; row < rowData!.length; row++) {
-      Data? data = rowData[row];
       if (rowData[row]?.value == null) {
         rowData[row] ??= rowData[0];
         rowData[row]!.value = const FormulaCellValue("0");
-      }
-      //var data = rowData[row]!.value;
-      if (data != null) {
-        //debugPrint(data.value); // 表示確認用
       }
     }
     importList.add(rowData);
@@ -82,7 +71,7 @@ void main() async {
   //const int setCloud = 2;
   const int testConvertExcel = 3;
 
-  const String importPath = 'data/'; //FrameData_Read.xlsx';
+  const String importPath = 'data/';
   const String fileName = 'FrameData_Read.xlsx';
   //const String fileName = 'FrameData_Read.csv';
   const String sheetName = 'A.K.I.';
@@ -95,14 +84,13 @@ void main() async {
   if (scenarioMain == testInputCheck) {
     InputCheck inputCheck = InputCheck();
 
-    //final csv = await csvImport();
     var excel = await excelImport(importPath, fileName, sheetName);
     //var csv = await csvImport(importPath, fileName);
+    bool result = inputCheck.judge(excel, input);
+    //bool result = inputCheck.judge(csv, input);
     if (kDebugMode) {
       //print(csv);
       //print(excel);
-      bool result = inputCheck.judge(excel, input);
-      //bool result = inputCheck.judge(csv, input);
       print(result);
       if (result == true) {
         print('yatta-');
@@ -114,7 +102,6 @@ void main() async {
 
   //Excelファイルデータ変換処理テスト用
   if (scenarioMain == testConvertExcel) {
-    //late List<Move> moveList = List.empty();
     //フレームデータの入ったEXCELファイル読み込み
     var excel = await excelImport(importPath, fileName, sheetName);
     // ignore: unused_local_variable

@@ -36,7 +36,7 @@ const int indexCommand1 = 0;
 const int indexCommand2 = 1;
 const int indexCommand3 = 2;
 const int indexCommand4 = 3;
-const int indexCommand5 = 4;
+const int indexAir = 4;
 const int indexMoveName = 5;
 const int indexStartUp = 6;
 const int indexActive = 7;
@@ -56,3 +56,35 @@ const int indexDetail = 19;
 const List<String> listCharacter = <String>['A.K.I.', 'RASHID'];
 const List<String> listTypeCM = <String>['CLASSIC', 'MODERN'];
 const List<String> listMove = <String>['通常技', '特殊技', '必殺技', 'SA', '共通行動'];
+
+//Firestore用定数
+const String fileFrameData = 'FrameData_Read.xlsx';
+const String collectionNameGames = 'Games';
+const String collectionNameCharacters = 'Characters';
+const String documentNameAKI = 'AKI';
+const String documentNameSF6 = "SF6";
+const String collectionNameFrameData = "FrameData";
+
+//フレームデータファイル内のデータ名リスト
+const List<String> frameDataNameList = [
+  'Command1',
+  'Command2',
+  'Command3',
+  'Command4',
+  'Air',
+  'MoveName',
+  'StartUp',
+  'Active',
+  'Recovery',
+  'HitStun',
+  'BlockStun',
+  'Cancel',
+  'Damage',
+  'Scaling',
+  'DGageUp',
+  'DGageDown',
+  'DGageCounter',
+  'SAGageUp',
+  'Properties',
+  'Detail'
+];

@@ -1,14 +1,20 @@
-import 'package:combo_maker/manage_cloud/readfile.dart';
+//flutter package
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:combo_maker/common/constants.dart';
 import 'package:path_provider/path_provider.dart';
-import 'common/moves.dart';
+import 'dart:io';
+
+//firebase package
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
+import 'firebase_options.dart';
+
+//My package
+import 'manage_cloud/readfile.dart';
+import 'common/constants.dart';
+import 'common/moves.dart';
+import 'firestore/firestore.dart';
 
 class ComboMaker extends StatefulWidget {
   const ComboMaker({super.key});
@@ -18,9 +24,7 @@ class ComboMaker extends StatefulWidget {
 }
 
 class _SetDataState extends State<ComboMaker> {
-  String path = "";
-  //Future<FirebaseFirestore> documents;
-  //String documentName = "";
+  String appDefaultPath = "";
   String display1 = 'path = ';
   String display2 = 'Firebase Document';
   List<DocumentSnapshot> documentList = [];
@@ -28,24 +32,21 @@ class _SetDataState extends State<ComboMaker> {
   //double? _deviceWidth, _deviceHeight;
 
   //ファイル読み込み用
-  //将来消す
-  String importPath =
-      "D:\\program\\flutter_projct\\combo_maker\\data"; //'data/'; //FrameData_Read.xlsx';
   String downloadFolderPath = '';
   String downloadFileFullPath = '';
-  String fileName = 'FrameData_Read.xlsx';
+  String fileName = fileFrameData;
   String sheetName = 'A.K.I.';
-  String input = 'MP';
   var readExcel; // = await excelImport(importPath, fileName, sheetName);
   File? file;
   Directory? appDocDir;
   Uint8List? byteDlFile;
   Uint8List? byteLocalFile;
+  List<Move> moveList = List.empty();
 
-  _SetDataState() {
-    //ファイル読み込み
-    //readExcel = excelImport(importPath, fileName, sheetName);
-  }
+  //firestore用
+  MyFirestore myFirestore = MyFirestore();
+
+  _SetDataState();
 
   void getDocumentList() async {
     List<String> dataList = List.empty();
@@ -59,52 +60,28 @@ class _SetDataState extends State<ComboMaker> {
       dataList = dataList.toList();
       dataList.add(snapshot.data().toString()); // `data()`で中身を取り出す
     }
-    /*
-    final document = FirebaseFirestore.instance
-        .collection("StreetFighter6")
-        .doc("Contents")
-        .get()
-        .then((DocumentSnapshot doc) {
-      final documentName = doc..toString();
-      setState(() {
-        display2 = display2 + documentName;
-        if (kDebugMode) {
-          print(documentName);
-        }
-      });
-    });
-    */
   }
 
   void getPath() async {
-    path = await _localPath;
+    appDefaultPath = await _localPath;
     setState(() {
-      display1 = display1 + path;
-      if (kDebugMode) {
-        //print(path);
-      }
+      display1 = display1 + appDefaultPath;
     });
   }
 
-  Future<bool> setFirebaseStorageFile(
-      String pathName, String fileName, String cloudURI) async {
+  Future<bool> setFirebaseStorageFile(String pathName, String fileName) async {
     bool result = false;
     // Create a storage reference from our app
     final storageRef = FirebaseStorage.instance.ref();
     // Create a reference with an initial file path and name
     final pathReference = storageRef.child(pathName + fileName);
-    /*
-    // Create a reference to a file from a Google Cloud Storage URI
-    final gsReference = FirebaseStorage.instance
-        .refFromURL("gs://combomaker-40efc.appspot.com/FrameData");
-    */
     try {
       const oneMegabyte = 1024 * 1024;
       byteDlFile = await pathReference.getData(oneMegabyte);
       //ローカルにファイルの存在確認
       appDocDir = await getApplicationDocumentsDirectory();
       downloadFolderPath = appDocDir!.path;
-      downloadFileFullPath = downloadFolderPath + fileName;
+      downloadFileFullPath = '$downloadFolderPath/$fileName';
       //ローカルにファイルをDL
       if (file == null || file?.existsSync() == false) {
         file = File(downloadFileFullPath);
@@ -226,11 +203,9 @@ class _SetDataState extends State<ComboMaker> {
                         TextButton(
                           onPressed: () async {
                             //フレームデータの入ったEXCELファイル読み込み
-                            readExcel =
-                                //await excelImport(importPath, fileName, sheetName);
-                                await excelImport(
-                                    "$path\\", fileName, sheetName);
-                            List<Move> moveList = readFrameData(readExcel);
+                            readExcel = await excelImport(
+                                "$appDefaultPath/", fileName, sheetName);
+                            moveList = readFrameData(readExcel);
                             setState(() {
                               display1 =
                                   "$display1\nRead ${moveList.length} Data";
@@ -240,12 +215,16 @@ class _SetDataState extends State<ComboMaker> {
                         ),
                         TextButton(
                           onPressed: () async {
-                            final resultDL = setFirebaseStorageFile(
-                                "FrameData/",
-                                "FrameData_Read.xlsx",
-                                "gs://combomaker-40efc.appspot.com/FrameData");
+                            setFirebaseStorageFile(
+                                "FrameData/", "FrameData_Read.xlsx");
                           },
                           child: const Text("Download"),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            myFirestore.uploadFrameData(moveList);
+                          },
+                          child: const Text("Upload FrameData"),
                         ),
                       ],
                     ),

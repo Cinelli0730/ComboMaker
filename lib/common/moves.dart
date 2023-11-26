@@ -2,6 +2,11 @@ import 'constants.dart';
 
 class Move {
   String moveName = ''; //技名
+  String command1 = ''; //コマンド1
+  String command2 = ''; //コマンド2
+  String command3 = ''; //コマンド3
+  String command4 = ''; //コマンド4
+  int air = 0; //0:地上技, 1:空中技
   int startUp = 0; //発生フレーム
   int active = 0; //持続フレーム
   int recovery = 0; //硬直フレーム
@@ -31,8 +36,12 @@ Move list2Move(List moveData) {
   Move move = Move();
 
   move.moveName = moveData[indexMoveName].value.toString();
+  move.command1 = moveData[indexCommand1].value.toString();
+  move.command2 = moveData[indexCommand2].value.toString();
+  move.command3 = moveData[indexCommand3].value.toString();
+  move.command4 = moveData[indexCommand4].value.toString();
+  move.air = var2int(moveData[indexAir].value.toString());
   move.startUp = var2int(moveData[indexStartUp].value.toString());
-  //H27がNULLになる
   move.active = convertActiveVlue(moveData[indexActive].value.toString());
   move.recovery =
       convertRecoveryValue(moveData[indexRecovery].value.toString());
@@ -70,24 +79,23 @@ int var2int(var value) {
 int convertActiveVlue(String activeValue) {
   int result = 0;
   String tmp;
-  tmp = removeWords(activeValue, ["-", "※", " "]);
-  if (tmp.isEmpty) {
-    result = 0;
+  if (activeValue.trim().length <= 2) {
+    tmp = removeWords(activeValue, ["-", "※", " "]);
+    if (tmp.isEmpty) {
+      result = 0;
+    } else {
+      result = int.parse(tmp);
+    }
   } else {
-    result = int.parse(tmp);
-  }
-  /*
-  if (activeValue.length <= 1) {
-    result = int.parse(activeValue);
-  } else {
-    List<String> activeFrame = activeValue.split('-');
+    List<String> activeFrame = activeValue.trim().split('-');
     if (activeFrame.length != 2) {
       result = -1;
     } else {
-      result = int.parse(activeFrame[1]) - int.parse(activeFrame[0]) + 1;
+      result = int.parse(activeFrame[1].trim()) -
+          int.parse(activeFrame[0].trim()) +
+          1;
     }
   }
-  */
   return result;
 }
 
