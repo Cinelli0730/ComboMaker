@@ -40,7 +40,7 @@ Future<List<List>> excelImport(
       Data? data = rowData[row];
       if (rowData[row]?.value == null) {
         rowData[row] ??= rowData[0];
-        rowData[row]!.value = "0" as CellValue?;
+        rowData[row]!.value = const FormulaCellValue("0");
       }
       //var data = rowData[row]!.value;
       if (data != null) {
@@ -63,7 +63,7 @@ Future<List<List>> excelImport2(Uint8List fileBytes, String sheetName) async {
       Data? data = rowData[row];
       if (rowData[row]?.value == null) {
         rowData[row] ??= rowData[0];
-        rowData[row]!.value = "0" as CellValue?;
+        rowData[row]!.value = const FormulaCellValue("0");
       }
       //var data = rowData[row]!.value;
       if (data != null) {
