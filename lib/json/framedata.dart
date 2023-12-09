@@ -1,6 +1,13 @@
-import 'constants.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class Move {
+//My package
+import '../common/constants.dart';
+
+part 'framedata.g.dart';
+
+@JsonSerializable()
+class FrameData {
+  FrameData();
   String moveName = ''; //技名
   String command1 = ''; //コマンド1
   String command2 = ''; //コマンド2
@@ -21,19 +28,24 @@ class Move {
   int sGageUp = 0; //SAゲージ増加量
   String properties = ''; //上・中・下段 or 投げ
   String detail = ''; //備考
+
+  factory FrameData.fromJson(Map<String, dynamic> json) =>
+      _$FrameDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FrameDataToJson(this);
 }
 
-List<Move> readFrameData_del(List<List> frameData) {
-  late List<Move> moves = List.empty();
-  for (int i = 0; i < frameData.length; i++) {
-    moves = moves.toList();
-    moves.add(list2Move(frameData[i]));
+List<FrameData> readFrameData(List<List> dataList) {
+  late List<FrameData> mFrameDataList = List.empty();
+  for (int i = 0; i < dataList.length; i++) {
+    mFrameDataList = mFrameDataList.toList();
+    mFrameDataList.add(list2Move(dataList[i]));
   }
-  return moves;
+  return mFrameDataList;
 }
 
-Move list2Move(List moveData) {
-  Move move = Move();
+FrameData list2Move(List moveData) {
+  FrameData move = FrameData();
 
   move.moveName = moveData[indexMoveName].value.toString();
   move.command1 = moveData[indexCommand1].value.toString();

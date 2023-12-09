@@ -11,10 +11,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'firebase_options.dart';
 
 //My package
-import 'manage_cloud/readfile.dart';
+import 'cloud_manager/readfile.dart';
 import 'common/constants.dart';
-import 'common/moves.dart';
+//import 'common/moves.dart';
 import 'firestore/firestore.dart';
+import 'package:combo_maker/json/framedata.dart';
 
 class ComboMaker extends StatefulWidget {
   const ComboMaker({super.key});
@@ -36,12 +37,13 @@ class _SetDataState extends State<ComboMaker> {
   String downloadFileFullPath = '';
   String fileName = fileFrameData;
   String sheetName = 'A.K.I.';
-  var readExcel; // = await excelImport(importPath, fileName, sheetName);
+  List<List<dynamic>> readExcel =
+      List.empty(); // = await importExcel(importPath, fileName, sheetName);
   File? file;
   Directory? appDocDir;
   Uint8List? byteDlFile;
   Uint8List? byteLocalFile;
-  List<Move> moveList = List.empty();
+  List<FrameData> mFrameDataList = List.empty();
 
   //firestore用
   MyFirestore myFirestore = MyFirestore();
@@ -125,7 +127,7 @@ class _SetDataState extends State<ComboMaker> {
       }
       //本来はここにDL状態によるエラー処理が入るかも
       byteLocalFile = file!.readAsBytesSync();
-      readExcel = excelImport2(byteLocalFile!, sheetName);
+      readExcel = await importExcel2(byteLocalFile!, sheetName);
       result = true;
     } on FirebaseException catch (e) {
       //exceptionが発生した場合のことをかく
@@ -203,12 +205,12 @@ class _SetDataState extends State<ComboMaker> {
                         TextButton(
                           onPressed: () async {
                             //フレームデータの入ったEXCELファイル読み込み
-                            readExcel = await excelImport(
+                            readExcel = await importExcel(
                                 "$appDefaultPath/", fileName, sheetName);
-                            moveList = readFrameData(readExcel);
+                            mFrameDataList = readFrameData(readExcel);
                             setState(() {
                               display1 =
-                                  "$display1\nRead ${moveList.length} Data";
+                                  "$display1\nRead ${mFrameDataList.length} Data";
                             });
                           },
                           child: const Text("Read Excel Data"),
@@ -222,7 +224,7 @@ class _SetDataState extends State<ComboMaker> {
                         ),
                         TextButton(
                           onPressed: () async {
-                            myFirestore.uploadFrameData(moveList);
+                            myFirestore.uploadFrameData(mFrameDataList);
                           },
                           child: const Text("Upload FrameData"),
                         ),

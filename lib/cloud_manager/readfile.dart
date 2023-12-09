@@ -4,10 +4,11 @@ import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:flutter/foundation.dart';
 import '../inputcheck.dart';
-import '../common/moves.dart';
+//import '../common/moves.dart';
+import '../json/framedata.dart';
 
 // Import a csv flie
-Future<List<List>> csvImport(String folderName, String fileName) async {
+Future<List<List>> importCsv(String folderName, String fileName) async {
   //const String importPath = 'data/FrameData.csv';
   //final File importFile = File(importPath);
   final File importFile = File(folderName + fileName);
@@ -26,7 +27,7 @@ Future<List<List>> csvImport(String folderName, String fileName) async {
   return Future<List<List>>.value(importList);
 }
 
-Future<List<List>> excelImport(
+Future<List<List>> importExcel(
     String folderName, String fileName, String sheetName) async {
   String importPath = folderName + fileName;
   var bytes = File(importPath).readAsBytesSync();
@@ -47,7 +48,7 @@ Future<List<List>> excelImport(
   return Future<List<List>>.value(importList);
 }
 
-Future<List<List>> excelImport2(Uint8List fileBytes, String sheetName) async {
+Future<List<List>> importExcel2(Uint8List fileBytes, String sheetName) async {
   var excel = Excel.decodeBytes(fileBytes);
   List<List> importList = [];
 
@@ -84,8 +85,8 @@ void main() async {
   if (scenarioMain == testInputCheck) {
     InputCheck inputCheck = InputCheck();
 
-    var excel = await excelImport(importPath, fileName, sheetName);
-    //var csv = await csvImport(importPath, fileName);
+    var excel = await importExcel(importPath, fileName, sheetName);
+    //var csv = await importCsv(importPath, fileName);
     bool result = inputCheck.judge(excel, input);
     //bool result = inputCheck.judge(csv, input);
     if (kDebugMode) {
@@ -103,8 +104,8 @@ void main() async {
   //Excelファイルデータ変換処理テスト用
   if (scenarioMain == testConvertExcel) {
     //フレームデータの入ったEXCELファイル読み込み
-    var excel = await excelImport(importPath, fileName, sheetName);
+    var excel = await importExcel(importPath, fileName, sheetName);
     // ignore: unused_local_variable
-    List<Move> moveList = readFrameData(excel);
+    List<FrameData> moveList = readFrameData(excel);
   }
 }

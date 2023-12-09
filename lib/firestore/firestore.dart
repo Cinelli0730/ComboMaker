@@ -1,4 +1,5 @@
 //flutter package
+import 'package:combo_maker/json/framedata.dart';
 import 'package:flutter/foundation.dart';
 
 //firebase package
@@ -6,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 //My package
 import '../common/constants.dart';
-import '../common/moves.dart';
+//import '../common/moves.dart';
 
 class MyFirestore {
   //定数定義
@@ -46,52 +47,55 @@ class MyFirestore {
   }
 
   writefirestoreField(
-      CollectionReference<Map<String, dynamic>> firestoreCollecton, Move move) {
-    String documentID = move.command1;
-    if (move.command2 != "-") {
-      documentID += move.command2;
-      if (move.command3 != "-") {
-        documentID += move.command3;
-        if (move.command4 != "-") {
-          documentID += move.command4;
-        }
-      }
-    }
+      CollectionReference<Map<String, dynamic>> firestoreCollecton,
+      FrameData mFrameData) {
+    // String documentID = mFrameData.command1;
+    // if (mFrameData.command2 != "-") {
+    //   documentID += mFrameData.command2;
+    //   if (mFrameData.command3 != "-") {
+    //     documentID += mFrameData.command3;
+    //     if (mFrameData.command4 != "-") {
+    //       documentID += mFrameData.command4;
+    //     }
+    //}
+    //}
+    String documentID = mFrameData.moveName;
     final firestoreDocumentField = <String, String>{
       frameDataNameList[0]: '',
       frameDataNameList[1]: '',
       frameDataNameList[2]: '',
       frameDataNameList[3]: '',
       frameDataNameList[4]: '',
-      frameDataNameList[5]: move.moveName,
-      frameDataNameList[6]: move.startUp.toString(),
-      frameDataNameList[7]: move.active.toString(),
-      frameDataNameList[8]: move.recovery.toString(),
-      frameDataNameList[9]: move.hitStun.toString(),
-      frameDataNameList[10]: move.blockStun.toString(),
-      frameDataNameList[11]: move.cancelType,
-      frameDataNameList[12]: move.damage.toString(),
-      frameDataNameList[13]: move.scaling.toString(),
-      frameDataNameList[14]: move.dGageUp.toString(),
-      frameDataNameList[15]: move.dGageDown.toString(),
-      frameDataNameList[16]: move.dGageCounter.toString(),
-      frameDataNameList[17]: move.sGageUp.toString(),
-      frameDataNameList[18]: move.detail
+      frameDataNameList[5]: mFrameData.moveName,
+      frameDataNameList[6]: mFrameData.startUp.toString(),
+      frameDataNameList[7]: mFrameData.active.toString(),
+      frameDataNameList[8]: mFrameData.recovery.toString(),
+      frameDataNameList[9]: mFrameData.hitStun.toString(),
+      frameDataNameList[10]: mFrameData.blockStun.toString(),
+      frameDataNameList[11]: mFrameData.cancelType,
+      frameDataNameList[12]: mFrameData.damage.toString(),
+      frameDataNameList[13]: mFrameData.scaling.toString(),
+      frameDataNameList[14]: mFrameData.dGageUp.toString(),
+      frameDataNameList[15]: mFrameData.dGageDown.toString(),
+      frameDataNameList[16]: mFrameData.dGageCounter.toString(),
+      frameDataNameList[17]: mFrameData.sGageUp.toString(),
+      frameDataNameList[18]: mFrameData.detail
     };
 
     firestoreCollecton.doc(documentID).set(firestoreDocumentField);
   }
 
-  uploadFrameData(List<Move> moveList) {
-    Move move = moveList[0];
-
+  uploadFrameData(List<FrameData> mFrameDataList) {
     //test用フロー
     try {
       //AKIのフレームデータドキュメントを開く
       firestoreCurrentCollectionObject =
           openFirestoreCollection(documentNameAKI);
-      //フレームデータを書き込み
-      writefirestoreField(firestoreCurrentCollectionObject!, move);
+      for (int i = 0; i < mFrameDataList.length; i++) {
+        //フレームデータを書き込み
+        writefirestoreField(
+            firestoreCurrentCollectionObject!, mFrameDataList[i]);
+      }
       // ignore: unused_catch_clause
     } on FirebaseException catch (e) {
       //exceptionが発生した場合のことをかく

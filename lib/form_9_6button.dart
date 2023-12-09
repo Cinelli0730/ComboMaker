@@ -1,5 +1,5 @@
 import 'package:combo_maker/inputcheck.dart';
-import 'package:combo_maker/manage_cloud/readfile.dart';
+import 'package:combo_maker/cloud_manager/readfile.dart';
 import 'package:flutter/material.dart';
 import 'package:combo_maker/common/constants.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -24,11 +24,11 @@ class _ComboMakerState extends State<ComboMaker> {
   String input = 'MP';
   //入力判定用クラス
   InputCheck inputCheck = InputCheck();
-  var readExcel; // = await excelImport(importPath, fileName, sheetName);
+  var readExcel; // = await importExcel(importPath, fileName, sheetName);
 
   _ComboMakerState() {
     //ファイル読み込み
-    readExcel = excelImport(importPath, fileName, sheetName);
+    readExcel = importExcel(importPath, fileName, sheetName);
   }
 
   void buttonPressed(String text) {
