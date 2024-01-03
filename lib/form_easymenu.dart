@@ -67,63 +67,74 @@ class _SetDataState extends ConsumerState<ComboMaker2> {
     //final _deviceWidth = MediaQuery.of(context).size.width; //画面の横幅
     final _deviceHeight = MediaQuery.of(context).size.height; //画面の縦幅
     final dataList = [
-      "ジャンプ弱P （空蛇突）",
-      "ジャンプ弱K （空蛇蹴）",
-      "ジャンプ中P （回旋蛇）",
-      "ジャンプ中K （蛇天蹴）",
-      "ジャンプ強P （騰空双蛇突）",
-      "ジャンプ強K （騰空双蹴蛇）",
-      "蒲牢",
-      "?吻",
-      "囚牛",
-      "蚣蝮",
-      "渾沌 （2段目）",
-      "窮奇 （2段目）",
-      "紫煙砲",
-      "紫煙追",
-      "OD 紫煙砲",
-      "OD 紫煙追",
-      "紫煙追 （炸裂）",
-      "OD 紫煙追 （炸裂）",
-      "紫泡泉",
-      "紫泡撒",
-      "弱 蛇頭鞭",
-      "中 蛇頭鞭",
-      "強 蛇頭鞭",
-      "OD 蛇頭鞭",
-      "弱 凶襲突",
-      "中 凶襲突",
-      "強 凶襲突",
-      "OD 凶襲突",
-      "弱 蛇軽功",
-      "中 蛇軽功",
-      "強 蛇軽功",
-      "OD 蛇軽功",
-      "悪鬼蛇行",
-      "猛毒牙",
-      "蛇連咬",
-      "雁字搦",
-      "SA1 死屍累々",
-      "SA2 紫煙裂爪",
-      "SA3 睚眦",
-      "CA 睚眦",
-      "贔屓",
-      "饕餮",
-      "前方ステップ",
-      "後方ステップ",
-      "ドライブインパクト （鑿歯）",
-      "ドライブリバーサル （封豕）",
-      "ドライブパリィ",
-      "ジャストパリィ（打撃）",
-      "ジャストパリィ（飛び道具）",
-      "パリィドライブラッシュ",
-      "キャンセルドライブラッシュ",
+      [
+        "5LP",
+        "5LK",
+        "5MP",
+        "5MK",
+        "5HP",
+        "5HK",
+        "2LP",
+        "2LK",
+        "2MP",
+        "2MK",
+        "2HP",
+        "2HK",
+        "5LP>5LP",
+        "5HP>5HP"
+      ],
+      // [
+      //   "ジャンプ弱P （空蛇突）",
+      //   "ジャンプ弱K （空蛇蹴）",
+      //   "ジャンプ中P （回旋蛇）",
+      //   "ジャンプ中K （蛇天蹴）",
+      //   "ジャンプ強P （騰空双蛇突）",
+      //   "ジャンプ強K （騰空双蹴蛇）",
+      //   "蒲牢",
+      //   "?吻",
+      //   "囚牛",
+      //   "蚣蝮",
+      //   "渾沌 （2段目）",
+      //   "窮奇 （2段目）",
+      // ],
+      [
+        "⇩⇘⇨P",
+        "↓↘→K",
+        "↓↙←P",
+        "↓↙←K",
+        "↓PP",
+        "↓PP>P",
+        "↓PP>K",
+        "↓PP>PK",
+      ],
+      [
+        "SA1 死屍累々",
+        "SA2 紫煙裂爪",
+        "SA3 睚眦",
+        "CA 睚眦",
+      ],
+      [
+        "贔屓",
+        "饕餮",
+        "前方ステップ",
+        "後方ステップ",
+        "ドライブインパクト （鑿歯）",
+        "ドライブリバーサル （封豕）",
+        "ドライブパリィ",
+        "ジャストパリィ（打撃）",
+        "ジャストパリィ（飛び道具）",
+        "パリィドライブラッシュ",
+        "キャンセルドライブラッシュ",
+      ]
     ];
-    List<FrameData> testFrameDataList = List.empty(growable: true);
+    List<List<FrameData>> testFrameDataList = List.empty(growable: true);
     for (int i = 0; i < dataList.length; i++) {
-      FrameData mFrameData = FrameData();
-      mFrameData.moveName = dataList[i];
-      testFrameDataList.add(mFrameData);
+      testFrameDataList.add(List.empty(growable: true));
+      for (int j = 0; j < dataList[i].length; j++) {
+        FrameData mFrameData = FrameData();
+        mFrameData.moveName = dataList[i][j];
+        testFrameDataList[i].add(mFrameData);
+      }
     }
     return Directionality(
         textDirection: TextDirection.ltr,
@@ -254,22 +265,22 @@ class _SetDataState extends ConsumerState<ComboMaker2> {
                         items: [
                           Page(
                             name: 'Page1',
-                            frameDataList: testFrameDataList,
+                            frameDataList: testFrameDataList[0],
                             btnCarouselController: buttonCarouselController,
                           ),
                           Page(
                             name: 'Page2',
-                            frameDataList: testFrameDataList,
+                            frameDataList: testFrameDataList[1],
                             btnCarouselController: buttonCarouselController,
                           ),
                           Page(
                             name: 'Page3',
-                            frameDataList: testFrameDataList,
+                            frameDataList: testFrameDataList[2],
                             btnCarouselController: buttonCarouselController,
                           ),
                           Page(
                             name: 'Page4',
-                            frameDataList: testFrameDataList,
+                            frameDataList: testFrameDataList[3],
                             btnCarouselController: buttonCarouselController,
                           ),
                         ],
@@ -332,34 +343,34 @@ class Page extends StatelessWidget {
     }
     return Row(
       children: [
+        // SizedBox(
+        //   height: double.infinity,
+        //   width: _deviceWidth * 0.05,
+        //   child: TextButton(
+        //     onPressed: () => btnCarouselController.previousPage(
+        //         duration: const Duration(milliseconds: 1),
+        //         curve: Curves.linear),
+        //     child: const Text("<"),
+        //   ),
+        // ),
         SizedBox(
-          height: double.infinity,
-          width: _deviceWidth * 0.05,
-          child: TextButton(
-            onPressed: () => btnCarouselController.previousPage(
-                duration: const Duration(milliseconds: 1),
-                curve: Curves.linear),
-            child: const Text("<"),
-          ),
-        ),
-        SizedBox(
-          width: _deviceWidth * 0.9, //* 70 / 100,
+          width: _deviceWidth, // * 0.9, //* 70 / 100,
           height: _deviceHeight * 0.5,
           //color: kWhite,
           child: Wrap(
               crossAxisAlignment: WrapCrossAlignment.start,
               children: widgetList),
         ),
-        SizedBox(
-          height: double.infinity,
-          width: _deviceWidth * 0.05,
-          child: TextButton(
-            onPressed: () => btnCarouselController.nextPage(
-                duration: const Duration(milliseconds: 1),
-                curve: Curves.linear),
-            child: const Text(">"),
-          ),
-        ),
+        // SizedBox(
+        //   height: double.infinity,
+        //   width: _deviceWidth * 0.05,
+        //   child: TextButton(
+        //     onPressed: () => btnCarouselController.nextPage(
+        //         duration: const Duration(milliseconds: 1),
+        //         curve: Curves.linear),
+        //     child: const Text(">"),
+        //   ),
+        // ),
       ],
     );
   }
@@ -375,30 +386,42 @@ class BtnParts extends ConsumerWidget {
     //画面サイズを取得
     final _deviceWidth = MediaQuery.of(context).size.width; //画面の横幅
     final _deviceHeight = MediaQuery.of(context).size.height; //画面の縦幅
-    final _btnRowNum = 13;
+    final _btnRowNum = 5;
     return Consumer(
       builder: (context, ref, child) {
         return SizedBox(
-          width: _deviceWidth / 4 * 0.9,
+          width: _deviceWidth / 4, //* 0.9,
           height: _deviceHeight / (4 * _btnRowNum + 1),
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: TextButton(
-              onPressed: () {
-                comboDisplay = ref.read(displayComboProvider);
-                if (comboDisplay == "") {
-                  ref
-                      .read(displayComboProvider.notifier)
-                      .update((state) => name);
-                } else {
-                  ref
-                      .read(displayComboProvider.notifier)
-                      .update((state) => "$state->$name");
-                }
-              },
-              child: Text(name),
+          // child: Text(
+          //   name,
+          //   style: const TextStyle(color: Colors.black),
+          //)
+          // child: FittedBox(
+          //   fit: BoxFit.fitHeight,
+          child: TextButton(
+            onPressed: () {
+              comboDisplay = ref.read(displayComboProvider);
+              if (comboDisplay == "") {
+                ref.read(displayComboProvider.notifier).update((state) => name);
+              } else {
+                ref
+                    .read(displayComboProvider.notifier)
+                    .update((state) => "$state->$name");
+              }
+            },
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.grey,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0))
+                //padding: const EdgeInsets.all(0),
+                //textStyle: TextStyle(color: Colors.black),
+                ),
+            child: Text(
+              name,
+              style: const TextStyle(color: Colors.black),
             ),
           ),
+          //),
         );
       },
     );
