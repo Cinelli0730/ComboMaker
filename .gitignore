@@ -10,6 +10,9 @@ pubspec.lock
 #FireBase設定ファイル
 firebase_options.dart
 
+#メモ
+memo.txt
+
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
 doc/api/
